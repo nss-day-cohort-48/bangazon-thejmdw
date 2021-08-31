@@ -27,9 +27,10 @@ class Payments(ViewSet):
 
     def create(self, request):
         """Handle POST operations
-
+        swapped the create_date and expiration_date properties on new_payment
         Returns:
             Response -- JSON serialized payment instance
+            
         """
         new_payment = Payment()
         new_payment.merchant_name = request.data["merchant_name"]
