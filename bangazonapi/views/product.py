@@ -284,14 +284,6 @@ class Products(ViewSet):
                 return False
 
             products = filter(sold_filter, products)
-        
-        # if location is not None:
-        #     def location_filter(product):
-        #         if product.location == location:
-        #             return True
-        #         return False
-
-        #     products = filter(location_filter, products)
 
         if location is not None:
             products = products.filter(location__contains=location)
