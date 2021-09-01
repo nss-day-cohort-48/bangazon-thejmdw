@@ -376,7 +376,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
         fields = ('id', 'url', 'user', 'phone_number',
-                  'address', 'payment_types', 'recommends')
+                  'address', 'payment_types', 'recommends', 'recommended')
         depth = 1
 
 
