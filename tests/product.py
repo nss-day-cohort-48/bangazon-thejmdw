@@ -96,5 +96,23 @@ class ProductTests(APITestCase):
         self.assertEqual(len(json_response), 3)
 
     # TODO: Delete product
+    def test_remove_product(self):
+        """
+        Ensure we can remove a product from an order.
+        """
+        # Add product
+        self.test_create_product()
+
+        # Remove product
+        url = "/products/1"
+        data = { "id": 1 }
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token)
+        response = self.client.delete(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+        # GET GAME AGAIN TO VERIFY 404 response
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
 
     # TODO: Product can be rated. Assert average rating exists.
