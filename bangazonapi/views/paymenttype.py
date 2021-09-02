@@ -58,6 +58,8 @@ class Payments(ViewSet):
                 payment_type, context={'request': request})
             if payment_type.customer_id == customer_id:
                 return Response(serializer.data)
+        except Payment.DoesNotExist as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
         except Exception as ex:
             return HttpResponseServerError(ex)
 
