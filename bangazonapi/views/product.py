@@ -8,7 +8,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
-from bangazonapi.models import Product, Customer, ProductCategory
+from bangazonapi.models import Product, Customer, ProductCategory, Rating
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.parsers import MultiPartParser, FormParser
 
@@ -307,6 +307,23 @@ class Products(ViewSet):
             rec.product = Product.objects.get(pk=pk)
 
             rec.save()
+
+            return Response(None, status=status.HTTP_204_NO_CONTENT)
+
+        return Response(None, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+    @action(methods=['post'], detail=True)
+    def rating(self, request, pk=None):
+        """Recommend products to other users"""
+
+        if request.method == "POST":
+            rating = Rating()
+            rating.customer = Customer.objects.get(user=request.auth.user)
+            rating.product = Product.objects.get(pk=pk)
+            rating.rating = request.data["rating"]
+
+            rating.save()
 
             return Response(None, status=status.HTTP_204_NO_CONTENT)
 
