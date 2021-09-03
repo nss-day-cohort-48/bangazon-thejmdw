@@ -32,6 +32,8 @@ def completed_order_list(request):
                     bangazonapi_orderproduct op ON op.order_id = o.id
                 JOIN
                     bangazonapi_product p ON p.id = op.product_id
+                WHERE
+                    o.payment_type_id IS NOT NULL
                 GROUP BY order_id
             """)
 
